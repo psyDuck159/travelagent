@@ -21,6 +21,8 @@ services:
     restart: unless-stopped
     volumes:
       - mysql-data:/var/lib/mysql
+      - ./schema.sql:/docker-entrypoint-initdb.d/1.sql
+      - ./data.sql:/docker-entrypoint-initdb.d/2.sql
     ports:
       - 3307:3306
     environment:
