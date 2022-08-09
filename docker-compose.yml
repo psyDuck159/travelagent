@@ -1,0 +1,30 @@
+version: "3.7"
+
+services:
+  app:
+    depends_on:
+      - mysql
+    build: ../travelagent
+    restart: on-failure
+    ports:
+      - 8081:8081
+    working_dir: /app
+    volumes:
+      - ./:/app
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: CNPM@2021
+      MYSQL_DB: travelagents
+  mysql:
+    image: mysql:oracle
+    restart: unless-stopped
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: CNPM@2021
+      MYSQL_DATABASE: travelagents
+volumes:
+  mysql-data:
