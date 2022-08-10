@@ -1,3 +1,5 @@
+USE travelagents;
+
 INSERT INTO tblUser (name, tel, address, email, username, password, role)
 VALUES ('Anh Quan', '0123456789', 'Viet Nam', 'anhquan@gmail.com', 'anhquan', '12345678', 'ROLE_ADMIN');
 
