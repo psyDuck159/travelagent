@@ -1,2 +1,2 @@
 # travelagent
-mini project in NASHTECT INTERNSHIP
+mini project in NASHTECH INTERNSHIP
