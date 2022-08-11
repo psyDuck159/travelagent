@@ -7,7 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 
 //@EnableWebSecurity(debug = true)
 @SpringBootApplication
-		(exclude = SecurityAutoConfiguration.class)
+		(exclude = {SecurityAutoConfiguration.class})
 public class TravelagentApplication {
 
 	public static void main(String[] args) {

@@ -2,12 +2,19 @@ package com.nashintern.travelagent.model;
 
 import lombok.*;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Builder
+@Entity
+@Table(name = "tblUser")
 public class User {
+    @Id
     private Integer id;
     private String username;
     private String password;

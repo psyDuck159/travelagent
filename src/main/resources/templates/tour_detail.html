@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${tour.name}"></title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+    <h1 th:text="${tour.tourInfo.name}"></h1>
+    <p th:text="Điểm khởi hành: ${tour.departure}"></p>
+    <p th:text="Thời gian tập trung: ${tour.departureTime}"></p>
+
+    <h2>Lịch trình</h2>
+
+    <div th:each="destination: ${tour.tourInfo.schedule}">
+        <h3 th:text="${destination.name}"></h3>
+        <p th:text="${destination.content}"></p>
+    </div>
+
+</body>
+</html>
