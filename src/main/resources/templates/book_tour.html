@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book tour</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Đặt tour</h1>
+    <h2 th:text="${tour.tourInfo.name}"></h2>
+    <p>Giá: <span th:text="${tour.tourInfo.pricePerPerson}"></span> USD/person</p>
+    <p>Số chỗ còn lại: </p>
+    <p>Thời gian: <span th:text="${tour.tourInfo.duration}"></span> ngày</p>
+    <p>Điểm khởi hành: <span th:text="${tour.departure}"></span></p>
+    <p>Thời gian tập trung: <span th:text="${tour.departureTime}"></span></p>
+
+    <label for="numberOfPersons">Số hành khách:</label>
+    <input type="number" name="numberOfPersons" id="numberOfPersons" value="1" min="1">
+
+    <h2>Thông tin hành khách</h2>
+    <form id="formBooking" action="" method="post">
+        <table class = "table table-striped table-bordered">>
+            <thead class = "table-dark">
+            <tr>
+                <th> Họ tên</th>
+                <th> Giới tính</th>
+                <th> Ngày sinh</th>
+            </tr>
+            </thead>
+            <tbody id="tblCustomerInfo">
+                <tr>
+                    <td>
+                        <input type="text" name="visitors[0].name" placeholder="Nhập họ tên quý khách" required>
+                    </td>
+                    <td>
+                        <select name="visitors[0].gender" required>
+                            <option selected value="Khác">Khác</option>
+                            <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="date" name="visitors[0].dob">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <label for="note">Ghi chú:</label>
+        <textarea name="note" id="note"
+                  placeholder="Ghi chú thêm của quý khách"
+                  cols="100" rows="5"
+        ></textarea>
+        <p>Tổng cộng: <span th:text="${tour.tourInfo.pricePerPerson}"></span> </p>
+
+        <button type="submit" class="btn btn-success">Xác nhận đặt</button>
+    </form>
+
+
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+        let numberOfPerson = 1;
+        const numberOfPersonsInput = document.getElementById('numberOfPersons');
+        const tblCustomerInfo = document.getElementById('tblCustomerInfo');
+
+        function htmlToElement(html) {
+            var template = document.createElement('template');
+            html = html.trim(); // Never return a text node of whitespace as the result
+            template.innerHTML = html;
+            return template.content.firstChild;
+        }
+        numberOfPersonsInput.onchange = function(e) {
+            let newNumPerson = parseInt(numberOfPersonsInput.value);
+
+            if (newNumPerson > numberOfPerson) {
+                while (numberOfPerson < newNumPerson) {
+                    const trHTML = `
+                        <tr>
+                            <td>
+                                <input type="text" name="visitors[${numberOfPerson}].name" placeholder="Nhập họ tên quý khách" required>
+                            </td>
+                            <td>
+                                <select name="visitors[${numberOfPerson}].gender" required>
+                                    <option selected value="Khác">Khác</option>
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nữ">Nữ</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="date" name="visitors[${numberOfPerson}].dob">
+                            </td>
+                        </tr>
+                    `;
+                    const trElement = htmlToElement(trHTML);
+                    console.log(trElement);
+                    tblCustomerInfo.appendChild(trElement);
+                    numberOfPerson++;
+                }
+            } else {
+                while (numberOfPerson > newNumPerson) {
+                    tblCustomerInfo.removeChild(tblCustomerInfo.lastChild);
+                    numberOfPerson--;
+                }
+            }
+        }
+
+        const formBooking = document.getElementById('formBooking');
+        formBooking.onsubmit = function(event) {
+            event.preventDefault();
+
+            var postFormUrl = 'https://localhost:8081/booking?tourId='/*[[${tour.id}]]*/;
+
+            console.log(postFormUrl);
+
+            var formData = new FormData(formBooking);
+            var data = $('#formBooking').serializeArray().reduce(function(obj, item) {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
+
+            console.log(data);
+
+            var request = new XMLHttpRequest();
+            request.open('POST', postFormUrl, true);
+
+            request.onload = function () {
+                console.log(request.response);
+            };
+        }
+    /*]]>*/
+    </script>
+</body>
+</html>
