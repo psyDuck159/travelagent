@@ -2,9 +2,7 @@ package com.nashintern.travelagent.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,13 +13,28 @@ import javax.persistence.Table;
 @Table(name = "tblUser")
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(nullable = false, unique = true, length = 20)
     private String username;
+
+    @Column(nullable = false, unique = false, length = 64)
     private String password;
+
+    @Column(nullable = false, unique = false, length = 20)
     private String name;
+
+    @Column(nullable = false, unique = true, length = 20)
     private String email;
+
+    @Column(nullable = false, unique = true, length = 12)
     private String tel;
+
+    @Column(nullable = false, unique = false, length = 20)
     private String address;
+
+    @Column(nullable = true, unique = false, length = 20)
     private String role;
 
     public static final class Role {
