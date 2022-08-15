@@ -1,8 +1,10 @@
 package com.nashintern.travelagent.model;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @NoArgsConstructor
@@ -14,12 +16,16 @@ import java.util.List;
 @Table(name = "tblBooking")
 public class Booking {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String status;
     private Double totalPrice;
     private String note;
     private String review;
     private Integer rating;
+    @Column(name = "create_at")
+    @CreationTimestamp
+    private Date createAt;
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "customerId")
     private User customer;

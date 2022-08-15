@@ -14,6 +14,7 @@ import java.util.List;
 @Table(name = "tblTourInfo")
 public class TourInfo {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private Integer maxSlot;

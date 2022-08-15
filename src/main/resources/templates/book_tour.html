@@ -55,7 +55,7 @@
                   placeholder="Ghi chú thêm của quý khách"
                   cols="100" rows="5"
         ></textarea>
-        <p>Tổng cộng: <span th:text="${tour.tourInfo.pricePerPerson}"></span> </p>
+        <p>Tổng cộng: <span id="totalPrice" th:text="${tour.tourInfo.pricePerPerson}"></span> </p>
 
         <button type="submit" class="btn btn-success">Xác nhận đặt</button>
     </form>
@@ -66,6 +66,8 @@
         let numberOfPerson = 1;
         const numberOfPersonsInput = document.getElementById('numberOfPersons');
         const tblCustomerInfo = document.getElementById('tblCustomerInfo');
+        const spanTotalPrice = document.getElementById('totalPrice');
+        const pricePerPerson = /*[[${tour.tourInfo.pricePerPerson}]]*/;
 
         function htmlToElement(html) {
             var template = document.createElement('template');
@@ -73,7 +75,7 @@
             template.innerHTML = html;
             return template.content.firstChild;
         }
-        numberOfPersonsInput.onchange = function(e) {
+        function updateTblCustomer(e) {
             let newNumPerson = parseInt(numberOfPersonsInput.value);
 
             if (newNumPerson > numberOfPerson) {
@@ -96,7 +98,7 @@
                         </tr>
                     `;
                     const trElement = htmlToElement(trHTML);
-                    console.log(trElement);
+
                     tblCustomerInfo.appendChild(trElement);
                     numberOfPerson++;
                 }
@@ -106,27 +108,55 @@
                     numberOfPerson--;
                 }
             }
+
+            spanTotalPrice.textContent = pricePerPerson * numberOfPerson;
+            console.log(spanTotalPrice);
+        }
+        numberOfPersonsInput.onchange = updateTblCustomer;
+        numberOfPersonsInput.onblur = updateTblCustomer;
+        const formBooking = document.getElementById('formBooking');
+
+        function parseParamName(key) {
+            return key.split(/[\[\].]/);
         }
 
-        const formBooking = document.getElementById('formBooking');
+        function parseFormDataToBooking(formData) {
+            let booking = {};
+            let visitors = [];
+            booking['visitors'] = visitors;
+            for (let key of formData.keys()) {
+                let args = parseParamName(key);
+                let value = formData.get(key);
+                if (key.indexOf('visitors') >= 0) {
+                    if (visitors.length <= args[1]) {
+                        let visitor = {};
+                        visitor[args[3]] = value;
+                        visitors.push(visitor);
+                    } else {
+                        visitors[args[1]][args[3]] = value;
+                    }
+                }
+                else {
+                    booking[key] = value;
+                }
+            }
+            console.log(booking);
+            return booking;
+        }
+
         formBooking.onsubmit = function(event) {
             event.preventDefault();
-
-            var postFormUrl = 'https://localhost:8081/booking?tourId='/*[[${tour.id}]]*/;
+            var postFormUrl = 'http://localhost:8081/booking?tourId='+ /*[[${tour.id}]]*/;
 
             console.log(postFormUrl);
 
             var formData = new FormData(formBooking);
-            var data = $('#formBooking').serializeArray().reduce(function(obj, item) {
-                obj[item.name] = item.value;
-                return obj;
-            }, {});
-
-            console.log(data);
+            let booking = parseFormDataToBooking(formData);
 
             var request = new XMLHttpRequest();
             request.open('POST', postFormUrl, true);
-
+            request.setRequestHeader("Content-type", "application/json");
+            request.send(JSON.stringify(booking));
             request.onload = function () {
                 console.log(request.response);
             };
