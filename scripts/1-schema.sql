@@ -90,3 +90,16 @@ CREATE TABLE IF NOT EXISTS tbl_visitor (
     PRIMARY KEY(id),
     FOREIGN KEY (booking_id) REFERENCES tbl_booking(id)
 );
+
+CREATE TABLE IF NOT EXISTS tbl_agent (
+    agent_id INTEGER(10) AUTO_INCREMENT,
+    agent_name VARCHAR(255) NOT NULL,
+    agent_tel CHAR(11) NOT NULL,
+    agent_address VARCHAR(255) NOT NULL,
+    agent_email VARCHAR(255) NOT NULL,
+    agent_username VARCHAR(255) NOT NULL UNIQUE,
+    agent_password VARCHAR(50) NOT NULL,
+    role VARCHAR(100) NOT NULL,
+    PRIMARY KEY(agent_id)
+);
+

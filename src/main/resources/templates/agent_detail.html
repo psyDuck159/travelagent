@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Management</title>
+    <link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+</head>
+<body>
+    <div class="container my-2">
+        <h1>Agent List</h1>
+        <a th:href="@{/showNewAgentForm}" class="btn btn-primary btn-sm mb-3">Add Agent</a>
+        <table border="1" class = "table table-striped table-responsive-md">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>User name</th>
+                    <th>Password</th>
+                    <th>Agent name</th>
+                    <th>Agent email</th>
+                    <th>Agent telephone</th>
+                    <th>Agent address</th>
+                    <th>Agent role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="agent: ${agents}">
+                    <td th:text="${agent.id}"></td>
+                    <td th:text="${agent.username}"></td>
+                    <td th:text="${agent.password}"></td>
+                    <td th:text="${agent.name}"></td>
+                    <td th:text="${agent.email}"></td>
+                    <td th:text="${agent.tel}"></td>
+                    <td th:text="${agent.address}"></td>
+                    <td th:text="${agent.role}"></td>
+                    <td> <a th:href="@{/showFormForUpdate/{id}(id=${agent.id})}" class="btn btn-primary btn-sm mb-3">Update</a>
+                        <a th:href="@{/deleteAgent/{id}(id=${agent.id})}" class="btn btn-danger btn-sm mb-3">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
