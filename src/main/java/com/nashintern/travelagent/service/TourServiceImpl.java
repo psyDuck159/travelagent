@@ -16,6 +16,17 @@ public class TourServiceImpl implements TourService{
 
     @Override
     public Tour getTourById(int id) {
-        return tourRepo.findById(id).orElse(null);
+        Tour tour = tourRepo.findById(id).orElse(null);
+        if (tour != null) {
+            tour.setAvailableSlot(getAvailableSlot(id));
+        } else {
+            throw new RuntimeException("Tour not found");
+        }
+        return tour;
+    }
+
+    @Override
+    public int getAvailableSlot(int tourId) {
+        return tourRepo.getAvailableSlot(tourId);
     }
 }

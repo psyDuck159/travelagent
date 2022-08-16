@@ -46,18 +46,10 @@ public class WebSecurityConfig {
         return authenticationProvider;
     }
 
-
-
-//    @Bean(name="myAuthenticationManager")
-//    @Override
-//    public AuthenticationManager authenticationManagerBean() throws Exception {
-//        return super.authenticationManagerBean();
-//    }
-
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http
+                .authorizeRequests()
                 .antMatchers("/").authenticated()
                 .anyRequest().permitAll()
                 .and()
@@ -79,7 +71,9 @@ public class WebSecurityConfig {
                        response.sendRedirect(context + "/login");
                    }
                }
-        ).permitAll();
+        ).permitAll()
+                .and()
+                .csrf().disable().cors();
         return http.build();
     }
 }

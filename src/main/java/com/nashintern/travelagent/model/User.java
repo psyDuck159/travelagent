@@ -1,8 +1,10 @@
 package com.nashintern.travelagent.model;
 
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -11,7 +13,7 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Table(name = "tblUser")
-public class User {
+public class User implements Serializable, GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -36,6 +38,11 @@ public class User {
 
     @Column(nullable = true, unique = false, length = 50)
     private String role = Role.CUSTOMER;
+
+    @Override
+    public String getAuthority() {
+        return this.role;
+    }
 
     public static final class Role {
         public static final String ADMIN = "ROLE_ADMIN";

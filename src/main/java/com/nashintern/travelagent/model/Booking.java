@@ -18,7 +18,7 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String status;
+    private String status = Status.CONFIRMING;
     private Double totalPrice;
     private String note;
     private String review;

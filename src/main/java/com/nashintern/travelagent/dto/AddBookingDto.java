@@ -15,4 +15,5 @@ import java.util.List;
 public class AddBookingDto {
     private List<Visitor> visitors;
     private String note;
+    private Double totalPrice;
 }

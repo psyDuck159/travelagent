@@ -22,6 +22,8 @@ public class Tour {
     private String departure;
     @Column
     private Date departureTime;
+    @Transient
+    private Integer availableSlot;
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "tourGuideId")
     private User tourGuide;

@@ -11,7 +11,8 @@
 <body>
     <h1 th:text="${tour.tourInfo.name}"></h1>
     <p>Giá: <span th:text="${tour.tourInfo.pricePerPerson}"></span> USD/person</p>
-    <p>Số chỗ còn lại: </p>
+    <p>Số chỗ tối đa: <span th:text="${tour.tourInfo.maxSlot}"></span></p>
+    <p>Số chỗ còn lại: <span th:text="${tour.availableSlot}"></span></p>
     <p>Thời gian: <span th:text="${tour.tourInfo.duration}"></span></p>
     <p>Điểm khởi hành: <span th:text="${tour.departure}"></span></p>
     <p>Thời gian tập trung: <span th:text="${tour.departureTime}"></span></p>

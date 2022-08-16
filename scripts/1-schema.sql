@@ -91,3 +91,16 @@ CREATE TABLE IF NOT EXISTS tbl_visitor (
     PRIMARY KEY(id),
     FOREIGN KEY (booking_id) REFERENCES tbl_booking(id)
 );
+
+-- create stored procedure 
+-- CREATE PROCEDURE `GET_AVAILABLE_SLOT` (IN tour_id INT, OUT available_slot INT) 
+-- BEGIN
+--     (SELECT @max_slot - @number_of_visitor AS available_slot
+-- 	FROM (
+-- 	SELECT @max_slot := ti.max_slot AS max_slot, @number_of_visitor := COUNT(v.id) AS number_of_visitor
+-- 	FROM tbl_tour AS t 
+-- 	INNER JOIN tbl_tour_info AS ti ON t.tour_info_id = ti.id
+-- 	INNER JOIN tbl_booking AS b ON b.tour_id = t.id
+-- 	INNER JOIN tbl_visitor AS v ON b.id = v.booking_id
+-- 	WHERE t.id = 1) AS view_tour_slot) INTO available_slot;
+-- END
