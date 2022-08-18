@@ -27,4 +27,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         return new CustomUserDetails(user);
     }
+
+    public User get(int id){
+        return repository.findById((long) id).get();
+    }
+
+    public void save(User user){
+        repository.save(user);
+    }
+
 }
