@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${tour.name}"></title>
+    <title th:text="${tour.tourInfo.name}"></title>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -10,15 +10,25 @@
 </head>
 <body>
     <h1 th:text="${tour.tourInfo.name}"></h1>
-    <p th:text="Điểm khởi hành: ${tour.departure}"></p>
-    <p th:text="Thời gian tập trung: ${tour.departureTime}"></p>
+    <p>Giá: <span th:text="${tour.tourInfo.pricePerPerson}"></span> USD/person</p>
+    <p>Số chỗ tối đa: <span th:text="${tour.tourInfo.maxSlot}"></span></p>
+    <p>Số chỗ còn lại: <span th:text="${tour.availableSlot}"></span></p>
+    <p>Thời gian: <span th:text="${tour.tourInfo.duration}"></span></p>
+    <p>Điểm khởi hành: <span th:text="${tour.departure}"></span></p>
+    <p>Thời gian tập trung: <span th:text="${tour.departureTime}"></span></p>
 
+    <a
+            class="btn btn-success"
+            th:href="@{/booking?tourId={tourId} (tourId=${tour.id})}">
+        Đặt tour ngay
+    </a>
     <h2>Lịch trình</h2>
 
     <div th:each="destination: ${tour.tourInfo.schedule}">
         <h3 th:text="${destination.name}"></h3>
         <p th:text="${destination.content}"></p>
     </div>
+
 
 </body>
 </html>

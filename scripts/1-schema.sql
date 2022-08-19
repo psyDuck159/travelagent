@@ -2,15 +2,16 @@ CREATE SCHEMA IF NOT EXISTS travelagents;
 USE travelagents;
 CREATE TABLE IF NOT EXISTS tbl_user (
     id INTEGER(10) AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(255) ,
     tel CHAR(11) NOT NULL,
-    address VARCHAR(255) NOT NULL,
+    address VARCHAR(255),
     dob DATE,
     email VARCHAR(255) NOT NULL,
     username VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(50) NOT NULL,
     enable TINYINT DEFAULT 1,
-    role VARCHAR(100) NOT NULL,
+    role VARCHAR(100) NOT NULL DEFAULT "ROLE_CUSTOMER",
+    create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(id)
 );
 
@@ -90,3 +91,16 @@ CREATE TABLE IF NOT EXISTS tbl_visitor (
     PRIMARY KEY(id),
     FOREIGN KEY (booking_id) REFERENCES tbl_booking(id)
 );
+
+-- create stored procedure 
+-- CREATE PROCEDURE `GET_AVAILABLE_SLOT` (IN tour_id INT, OUT available_slot INT) 
+-- BEGIN
+--     (SELECT @max_slot - @number_of_visitor AS available_slot
+-- 	FROM (
+-- 	SELECT @max_slot := ti.max_slot AS max_slot, @number_of_visitor := COUNT(v.id) AS number_of_visitor
+-- 	FROM tbl_tour AS t 
+-- 	INNER JOIN tbl_tour_info AS ti ON t.tour_info_id = ti.id
+-- 	INNER JOIN tbl_booking AS b ON b.tour_id = t.id
+-- 	INNER JOIN tbl_visitor AS v ON b.id = v.booking_id
+-- 	WHERE t.id = 1) AS view_tour_slot) INTO available_slot;
+-- END

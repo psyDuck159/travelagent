@@ -16,11 +16,14 @@ import java.util.Date;
 @Table(name = "tblTour")
 public class Tour {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column
     private String departure;
     @Column
     private Date departureTime;
+    @Transient
+    private Integer availableSlot;
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "tourGuideId")
     private User tourGuide;

@@ -17,6 +17,7 @@ import java.util.Date;
 @Table(name = "tblVisitor")
 public class Visitor {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private String gender;
