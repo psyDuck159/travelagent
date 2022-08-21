@@ -2,13 +2,14 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="/resources/static/bootstrap.css">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-    <div class="container">
+    <!-- <div class="container">
         <div class="row">
             <div class="col-md-5 mx-auto">
                 <div id="first">
@@ -52,7 +53,7 @@
                                     </div>
                                     <div class="col-md-12 ">
                                         <div class="form-group">
-                                            <p class="text-center"><a href="/login" id="signin">Already have an account?</a></p>
+                                            <p class="text-center"><a href="signin-form.html" id="signin">Already have an account?</a></p>
                                         </div>
                                     </div>
                                 </form>
@@ -62,6 +63,62 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
+    <div class="container">
+        <div class="row">
+          <div class="col-lg-10 col-xl-9 mx-auto">
+            <div class="card flex-row my-5 border-0 shadow-lg rounded-3 overflow-hidden">
+              <div class="card-img-left d-none d-md-flex">
+                <!-- Background image for card set in CSS! -->
+              </div>
+              <div class="card-body p-4 p-sm-5">
+                <h2 class="card-title text-center mb-5 fw-light fs-5">Register</h2>
+                <form th:action="@{/process_register}" method="post" th:object="${user}" name="registration">
+    
+                  <div class="form-floating mb-3">
+                    <label for="exampleInputEmail1">Username</label>
+                    <input type="text"  name="firstname" class="form-control" th:field="*{username}" 
+                        id="firstName" aria-describedby="emailHelp" placeholder="Enter username" required minlength="2" maxlength="20">
+                  </div>
+    
+                  <div class="form-floating mb-3">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" name="email"  class="form-control" th:field="*{email}"
+                        id="email" aria-describedby="emailHelp" placeholder="Enter email" required>
+                  </div>
+
+                  <div class="form-floating mb-3">
+                    <label for="exampleInputEmail1">Telephone number</label>
+                    <input type="tel" name="tel" id="tel" class="form-control" th:field="*{tel}"
+                            aria-describedby="tel" placeholder="Enter Telephone Number" required minlength="10" maxlength="12">
+                  </div>
+
+                  <div class="form-floating mb-3">
+                    <label for="exampleInputEmail1">Password</label>
+                    <input type="password" name="password" id="password" class="form-control" th:field="*{password}"
+                            aria-describedby="emailHelp" placeholder="Enter Password" required minlength="6" maxlength="12">
+                  </div>
+
+                  <div class="form-group">
+                        <div class="form-check d-block text-center">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">I agree to <a href="#"> the terms and conditions </a></label>
+                        </div>
+                  </div>
+
+                  <div class="col-md-12 text-center mb-3">
+                        <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Get Started For Free</button>
+                  </div>
+
+    
+                  <p class="d-block text-center mt-2 small"> <a href="signin-form.html" id="signin">Already have an account?</a></p>
+    
+                     
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 </body>
 </html>
